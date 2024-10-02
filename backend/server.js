@@ -44,6 +44,9 @@ app.get("/api/config/paypal", (req, res) => {
     res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
 });
 
+// Serve uploads folder as static
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
 // Serve static files in production
 const __dirname = path.resolve();
 
@@ -59,13 +62,11 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// Serve uploads folder as static
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
-
 // Error handling for undefined routes
 app.use((req, res, next) => {
   res.status(404).json({ message: "Route not found" });
 });
+
 
 // Start the server
 app.listen(port, () => console.log(`Server running on port: ${port}`));
