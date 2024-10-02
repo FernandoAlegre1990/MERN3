@@ -39,18 +39,17 @@ app.use(cookieParser());
 // Serve uploads folder as static
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-// Serve static files in production
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/build")));
+// Rutas de la API
+app.use("/api/users", userRoutes);
+app.use("/api/category", categoryRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/uploads", uploadRoutes);
+app.use("/api/orders", orderRoutes);
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
-  );
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is running...");
-  });
-}
+// Paypal config
+app.get("/api/config/paypal", (req, res) => {
+    res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
+});
 
 // Error handling for undefined routes
 app.use((req, res, next) => {
