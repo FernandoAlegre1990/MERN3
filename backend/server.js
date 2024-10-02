@@ -3,6 +3,7 @@ import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors"; // Importar cors
 
 // Utiles
 import connectDB from "./config/db.js";
@@ -10,7 +11,7 @@ import userRoutes from "./routes/userRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
-import orderRoutes from "./routes/orderRoutes.js"
+import orderRoutes from "./routes/orderRoutes.js";
 
 dotenv.config();
 const port = process.env.PORT || 5000;
@@ -18,6 +19,13 @@ const port = process.env.PORT || 5000;
 connectDB();
 
 const app = express();
+
+// CORS configuration
+const allowedOrigins = ["https://mern3-client.onrender.com"]; // Lista de orígenes permitidos
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true, // Permitir cookies si las usas
+}));
 
 // Middlewares
 app.use(express.json());
