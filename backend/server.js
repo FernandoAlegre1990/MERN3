@@ -2,8 +2,8 @@ import path from "path";
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import cors from "cors"; // Importar cors
-import { fileURLToPath } from 'url'; // Importar para crear __dirname
+import cors from "cors";
+import { fileURLToPath } from 'url';
 
 // Crear __dirname manualmente en ES6
 const __filename = fileURLToPath(import.meta.url);
@@ -48,7 +48,7 @@ app.use("/api/orders", orderRoutes);
 
 // Paypal config
 app.get("/api/config/paypal", (req, res) => {
-    res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
+  res.send({ clientId: process.env.PAYPAL_CLIENT_ID });
 });
 
 // Error handling for undefined routes
